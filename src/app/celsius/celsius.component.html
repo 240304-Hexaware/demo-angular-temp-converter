@@ -1,3 +1,2 @@
-<h3>Celsius!</h3>
-<p>celsius temp: {{celsiusValue}}</p>
-Enter new temp: <input type=text (input)="newTemp($event)">
+<h3>Celsius Component</h3>
+<p><input value=0 type="text" size=2 (input)="convertTemp($event)">  degrees celsius = {{this.converter.fahrenheitTemp}} degrees fahrenheit!</p>

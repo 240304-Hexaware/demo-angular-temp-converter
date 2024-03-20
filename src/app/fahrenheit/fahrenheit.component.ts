@@ -1,18 +1,23 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ConverterService } from '../converter.service';
 
 @Component({
   selector: 'app-fahrenheit',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './fahrenheit.component.html',
   styleUrl: './fahrenheit.component.css'
 })
 export class FahrenheitComponent {
-  @Input() fahrenheitValue: number = 32;
-  @Output() newTempEmitter: EventEmitter<number> = new EventEmitter<number>();
+  converter: ConverterService;
 
-  newTemp(event: any) {
-    console.log("event: ", event);
-    this.newTempEmitter.emit(event.target.value);
+  constructor(converterService: ConverterService) {
+    this.converter = converterService;
   }
+
+  convertTemp(event: any) {
+    this.converter.fToC(event.target.value);
+  }
+
 }
