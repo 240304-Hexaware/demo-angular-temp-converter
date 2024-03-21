@@ -11,14 +11,25 @@ import { ConverterService } from '../converter.service';
 })
 export class CelsiusComponent {
   converter: ConverterService;
+  celsiusTemp: number = 0;
+  unsubscribe: Function;
 
   constructor(converterService: ConverterService) {
     this.converter = converterService;
-
+    //subscribe for new celsius values
+    this.unsubscribe = this.converter.subscribe({
+      topic: "celsius",
+      notify: (value: number) => {
+        this.celsiusTemp = value;
+      }
+    });
   }
 
   convertTemp(event: any) {
-    this.converter.cToF(event.target.value);
+    this.converter.publish("fahrenheit", this.converter.cToF(event.target.value));
   }
 
+  ngOnDestroy() {
+    this.unsubscribe();
+  }
 }
